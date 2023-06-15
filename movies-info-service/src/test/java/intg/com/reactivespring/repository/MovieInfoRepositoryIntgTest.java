@@ -10,9 +10,15 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import reactor.test.StepVerifier;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 import java.time.LocalDate;
 import java.util.List;
+
+
+
 
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
 @TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")
@@ -52,6 +58,22 @@ class MovieInfoRepositoryIntgTest {
         //then
         StepVerifier.create(moviesInfoFlux)
                 .expectNextCount(3)
+                .verifyComplete();
+    }
+
+    @Test
+    void findById() {
+        //given
+
+        //when
+        var moviesInfoMono = movieInfoRepository.findById("abc").log();
+
+        //then
+        StepVerifier.create(moviesInfoMono)
+                //.expectNextCount(1)
+                .assertNext(movieInfo -> {
+                    assertEquals("Dark Knight Rises", movieInfo.getName());
+                })
                 .verifyComplete();
     }
 
