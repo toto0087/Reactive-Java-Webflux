@@ -10,11 +10,6 @@ spring:
       database: local
 ---
 spring:
-  mongodb:
-    embedded:
-      version: "3.5.5"
----
-spring:
   config:
     activate:
       on-profile:
