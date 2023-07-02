@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
@@ -68,4 +69,35 @@ public class MoviesInfoControllerUnitTest {
                 .expectBody()
                 .jsonPath("$.name").isEqualTo("Dark Knight Rises");;
     }
+
+    @Test
+    void addMovieInfo() {
+        //given
+        var movieInfo = new MovieInfo(null, "Batman Begins1",
+                "2005", List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+
+        when(movieInfoService.addMovieInfo(isA(MovieInfo.class))).thenReturn(
+                Mono.just(new MovieInfo("mockId", "Batman Begins1",
+                        "2005", List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15")))
+        );
+
+        //when
+        webTestClient
+                .post()
+                .uri(MOVIES_INFO_URL)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .isCreated()
+                .expectBody(MovieInfo.class)
+                .consumeWith(movieInfoEntityExchangeResult -> {
+
+                    var savedMovieInfo = movieInfoEntityExchangeResult.getResponseBody();
+                    assert savedMovieInfo!=null;
+                    assert savedMovieInfo.getMovieInfoId()!=null;
+                    assertEquals("mockId",savedMovieInfo.getMovieInfoId());
+                });
+
+    }
+
 }
