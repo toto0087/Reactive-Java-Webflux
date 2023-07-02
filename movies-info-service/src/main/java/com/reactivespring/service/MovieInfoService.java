@@ -3,7 +3,6 @@ package com.reactivespring.service;
 import com.reactivespring.domain.MovieInfo;
 import com.reactivespring.repository.MovieInfoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -41,5 +40,10 @@ public class MovieInfoService {
                     movieInfo.setYear(updatedMovieInfo.getYear());
                     return movieInfoRepository.save(movieInfo);
                 });
+    }
+
+    public Mono<Void> deleteMovieInfo(String id) {
+
+        return movieInfoRepository.deleteById(id);
     }
 }
