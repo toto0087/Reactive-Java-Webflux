@@ -131,4 +131,45 @@ public class MoviesInfoControllerUnitTest {
                 });
     }
 
+    @Test
+    void deleteMovieInfo() {
+        var movieInfoId = "abc";
+
+        when(movieInfoService.deleteMovieInfo(isA(String.class)))
+                .thenReturn(Mono.empty());
+
+        webTestClient
+                .delete()
+                .uri(MOVIES_INFO_URL+"/{id}",movieInfoId)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+    }
+
+    @Test
+    void addMovieInfo_validation() {
+        //given
+        var movieInfo = new MovieInfo(null, "",
+                "2005", List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+
+
+
+        //when
+        webTestClient
+                .post()
+                .uri(MOVIES_INFO_URL)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .isBadRequest()
+                .expectBody(String.class)
+                .consumeWith(stringEntityExchangeResult -> {
+
+                    var responsebody = stringEntityExchangeResult.getResponseBody();
+                    System.out.println("responseBody: "+responsebody);
+                    assert responsebody!=null;
+                });
+
+    }
+
 }
