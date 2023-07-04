@@ -98,6 +98,8 @@ class MoviesInfoControllerIntgTest {
                 .jsonPath("$.name").isEqualTo("Dark Knight Rises");;
     }
 
+    
+
     @Test
     void updateMovieInfo() {
         //given
@@ -134,4 +136,8 @@ class MoviesInfoControllerIntgTest {
                 .expectStatus()
                 .isNoContent();
     }
+
+
+
+
 }
