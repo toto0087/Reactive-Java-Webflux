@@ -52,4 +52,10 @@ public class MovieInfoService {
         return movieInfoRepository.findByYear(year);
 
     }
+
+    public Flux<MovieInfo> getMovieInfoByName(String name) {
+
+        return movieInfoRepository.findByName(name);
+
+    }
 }

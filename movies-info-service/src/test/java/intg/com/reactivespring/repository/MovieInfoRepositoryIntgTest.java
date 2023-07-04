@@ -143,4 +143,17 @@ class MovieInfoRepositoryIntgTest {
                 .verifyComplete();
     }
 
+    @Test
+    void findByName() {
+        //given
+
+        //when
+        var moviesInfoFlux = movieInfoRepository.findByName("Dark Knight Rises").log();
+
+        //then
+        StepVerifier.create(moviesInfoFlux)
+                .expectNextCount(1)
+                .verifyComplete();
+    }
+
 }

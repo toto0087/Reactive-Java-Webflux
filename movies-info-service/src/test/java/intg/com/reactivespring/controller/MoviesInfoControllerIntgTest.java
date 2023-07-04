@@ -101,6 +101,7 @@ class MoviesInfoControllerIntgTest {
                 .hasSize(1);
     }
 
+
     @Test
     void getMovie() {
         var movieInfoId = "abc";
@@ -111,7 +112,7 @@ class MoviesInfoControllerIntgTest {
                 .expectStatus()
                 .is2xxSuccessful()
                 .expectBody()
-                .jsonPath("$.name").isEqualTo("Dark Knight Rises");;
+                .jsonPath("$.name").isEqualTo("Dark Knight Rises");
     }
 
     

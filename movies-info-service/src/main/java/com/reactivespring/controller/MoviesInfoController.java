@@ -33,6 +33,8 @@ public class MoviesInfoController {
             return movieInfoService.getMovieInfoByYear(year);
         }
 
+
+
         return movieInfoService.getAllMovies().log();
     }
 
