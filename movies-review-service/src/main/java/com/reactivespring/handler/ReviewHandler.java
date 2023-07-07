@@ -25,8 +25,18 @@ public class ReviewHandler {
     }
 
     public Mono<ServerResponse> getReview(ServerRequest request) {
-        var reviewsFlux = reviewReactiveRepository.findAll();
-        return ServerResponse.ok().body(reviewsFlux, Review.class);
+
+        var movieInfoId = request.queryParam("movieInfoId");
+
+        if(movieInfoId.isPresent()) {
+            var reviewFlux = reviewReactiveRepository.findReviewsByMovieInfoId(Long.valueOf(movieInfoId.get()));
+            return ServerResponse.ok().body(reviewFlux, Review.class);
+        } else {
+            var reviewsFlux = reviewReactiveRepository.findAll();
+            return ServerResponse.ok().body(reviewsFlux, Review.class);
+        }
+
+
     }
 
     public Mono<ServerResponse> updateReview(ServerRequest request) {
@@ -46,5 +56,11 @@ public class ReviewHandler {
     }
 
 
-
+    public Mono<ServerResponse> deleteReview(ServerRequest request) {
+        var reviewId = request.pathVariable("id");
+        var existingReview = reviewReactiveRepository.findById(reviewId);
+        return existingReview
+                .flatMap(review -> reviewReactiveRepository.deleteById(reviewId)
+                        .then(ServerResponse.noContent().build()));
+    }
 }
