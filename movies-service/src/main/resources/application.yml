@@ -1,5 +1,9 @@
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile:
+        - local
+restClient:
+  moviesInfoUrl: http://localhost:8080/v1/moviesinfos
 server:
   port: 8082
