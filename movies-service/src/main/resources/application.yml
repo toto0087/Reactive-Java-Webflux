@@ -4,6 +4,7 @@ spring:
       on-profile:
         - local
 restClient:
-  moviesInfoUrl: http://localhost:8080/v1/moviesinfos
+  moviesInfoUrl: http://localhost8080:/v1/moviesinfos
+  reviewsUrl: http://localhost8081:/v1/reviews
 server:
   port: 8082
