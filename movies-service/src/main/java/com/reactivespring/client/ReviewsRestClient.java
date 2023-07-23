@@ -26,12 +26,11 @@ public class ReviewsRestClient {
                 .queryParam("movieInfoId",movieId)
                 .buildAndExpand().toUriString();
 
-        webClient
+        return webClient
                 .get()
                 .uri(url)
                 .retrieve()
                 .bodyToFlux(Review.class);
-
     }
 
 }
