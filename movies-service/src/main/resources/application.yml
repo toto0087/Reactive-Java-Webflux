@@ -1,10 +1,9 @@
 spring:
-  config:
-    activate:
-      on-profile:
-        - local
+  profiles:
+    active: local
+---
 restClient:
-  moviesInfoUrl: http://localhost8080:/v1/moviesinfos
-  reviewsUrl: http://localhost8081:/v1/reviews
+  moviesInfoUrl: http://localhost:8080/v1/movieinfos
+  reviewsUrl: http://localhost:8081/v1/reviews
 server:
   port: 8082
