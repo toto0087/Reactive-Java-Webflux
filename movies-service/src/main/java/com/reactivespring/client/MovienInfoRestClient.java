@@ -33,9 +33,7 @@ public class MovienInfoRestClient {
                         return Mono.error(new MoviesInfoClientException(
                                 "No movieInfo avalable for the given ID:" + MovieId,
                                 clientResponse.statusCode().value()));
-
                     }
-
                     return clientResponse.bodyToMono(String.class)
                             .flatMap(responseMessage -> Mono.error(new MoviesInfoClientException(
                                     responseMessage,clientResponse.statusCode().value()
@@ -48,6 +46,7 @@ public class MovienInfoRestClient {
                             )));
                 })
                 .bodyToMono(MovieInfo.class)
+                .retry(3)
                 .log();
 
     }
